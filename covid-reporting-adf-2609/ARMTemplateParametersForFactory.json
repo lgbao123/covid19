@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "covid-reporting-adf-2609"
+		},
+		"ls_blob_covidrepotingsa2609_connectionString": {
+			"value": ""
+		},
+		"ls_dls_covidrepotingdl2609_accountKey": {
+			"value": ""
+		},
+		"ls_dls_covidrepotingdl2609_properties_typeProperties_url": {
+			"value": "https://covidrepotingdl2609.dfs.core.windows.net/"
+		},
+		"ls_http_opendata_ecdc_properties_typeProperties_url": {
+			"value": "@{linkedService().baseUrl}"
+		},
+		"tg_ingest_population_data_properties_typeProperties_scope": {
+			"value": "/subscriptions/f1a3538a-2747-4225-a112-237bfd0c6e50/resourceGroups/covid-reporting-gr/providers/Microsoft.Storage/storageAccounts/covidrepotingsa2609"
+		}
+	}
+}
