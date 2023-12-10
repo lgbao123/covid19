@@ -44,6 +44,9 @@
 				},
 				{
 					"name": "SelectForSink"
+				},
+				{
+					"name": "FilterNullContinent"
 				}
 			],
 			"scriptLines": [
@@ -71,7 +74,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> CountrySource",
-				"CasesDeathsSource select(mapColumn(",
+				"FilterNullContinent select(mapColumn(",
 				"          country,",
 				"          country_code,",
 				"          population,",
@@ -108,8 +111,10 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectForSink",
+				"CasesDeathsSource filter(not(isNull(country_code))) ~> FilterNullContinent",
 				"SelectForSink sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     partitionFileNames:['cases_deadths.csv'],",
 				"     truncate: true,",
 				"     umask: 0022,",
 				"     preCommands: [],",
