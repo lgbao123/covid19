@@ -97,7 +97,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "ds_ecdc_raw_http_source",
+									"referenceName": "ds_raw_ecdc_http_source",
 									"type": "DatasetReference",
 									"parameters": {
 										"urlRelativeSource": {
@@ -113,7 +113,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "ds_ecdc_raw_csv",
+									"referenceName": "ds_raw_ecdc_csv",
 									"type": "DatasetReference",
 									"parameters": {
 										"sinkFileName": {

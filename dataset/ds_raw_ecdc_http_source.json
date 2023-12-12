@@ -1,5 +1,5 @@
 {
-	"name": "ds_ecdc_raw_http_source",
+	"name": "ds_raw_ecdc_http_source",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_http_opendata_ecdc",

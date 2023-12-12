@@ -1,5 +1,5 @@
 {
-	"name": "ds_cases_deaths_processed",
+	"name": "ds_processed_cases_deaths",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_dls_covidrepotingdl2609",

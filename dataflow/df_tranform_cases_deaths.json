@@ -6,14 +6,14 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "ds_cases_deaths_raw",
+						"referenceName": "ds_raw_cases_deaths",
 						"type": "DatasetReference"
 					},
 					"name": "CasesDeathsSource"
 				},
 				{
 					"dataset": {
-						"referenceName": "ds_country_lookup",
+						"referenceName": "ds_lookup_dim_country",
 						"type": "DatasetReference"
 					},
 					"name": "CountrySource"
@@ -22,7 +22,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "ds_cases_deaths_processed",
+						"referenceName": "ds_processed_cases_deaths",
 						"type": "DatasetReference"
 					},
 					"name": "CasesDeathsSink",

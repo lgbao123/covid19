@@ -1,5 +1,5 @@
 {
-	"name": "ds_raw_population",
+	"name": "ds_processed_hospital_admissions_weekly",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_dls_covidrepotingdl2609",
@@ -10,16 +10,14 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "population_by_age.tsv",
-				"folderPath": "population",
-				"fileSystem": "raw"
+				"folderPath": "ecdc/hospital_admissions_weekly",
+				"fileSystem": "processed"
 			},
-			"columnDelimiter": "\t",
+			"columnDelimiter": ",",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
 		"schema": []
-	},
-	"type": "Microsoft.DataFactory/factories/datasets"
+	}
 }

@@ -67,13 +67,13 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "ds_population_raw_gz_source",
+									"referenceName": "ds_raw_population_gz_source",
 									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "ds_population_raw_tsv",
+									"referenceName": "ds_raw_population",
 									"type": "DatasetReference"
 								}
 							]
@@ -99,7 +99,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"dataset": {
-									"referenceName": "ds_population_raw_gz_source",
+									"referenceName": "ds_raw_population_gz_source",
 									"type": "DatasetReference"
 								},
 								"enableLogging": false,
@@ -127,7 +127,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "ds_population_raw_gz_source",
+						"referenceName": "ds_raw_population_gz_source",
 						"type": "DatasetReference"
 					},
 					"fieldList": [
