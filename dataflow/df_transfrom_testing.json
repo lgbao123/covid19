@@ -1,0 +1,142 @@
+{
+	"name": "df_transfrom_testing",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_raw_testing",
+						"type": "DatasetReference"
+					},
+					"name": "sourceTesting"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_lookup_dim_date",
+						"type": "DatasetReference"
+					},
+					"name": "sourceDimDate"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_lookup_dim_country",
+						"type": "DatasetReference"
+					},
+					"name": "sourceDimCountry"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_processed_testing",
+						"type": "DatasetReference"
+					},
+					"name": "sinkOutput"
+				}
+			],
+			"transformations": [
+				{
+					"name": "lookupCountry"
+				},
+				{
+					"name": "lookupDimDate"
+				},
+				{
+					"name": "addYearWeek"
+				},
+				{
+					"name": "selectColumn"
+				},
+				{
+					"name": "aggregateYearWeek"
+				},
+				{
+					"name": "sortData"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          country as string,",
+				"          country_code as string,",
+				"          year_week as string,",
+				"          new_cases as integer,",
+				"          tests_done as integer,",
+				"          population as integer,",
+				"          testing_rate as double,",
+				"          positivity_rate as double,",
+				"          testing_data_source as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> sourceTesting",
+				"source(output(",
+				"          date_key as string,",
+				"          date as date,",
+				"          year as short,",
+				"          month as short,",
+				"          day as short,",
+				"          day_name as string,",
+				"          day_of_year as short,",
+				"          week_of_month as short,",
+				"          week_of_year as short,",
+				"          month_name as string,",
+				"          year_month as integer,",
+				"          year_week as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> sourceDimDate",
+				"source(output(",
+				"          country as string,",
+				"          country_code_2_digit as string,",
+				"          country_code_3_digit as string,",
+				"          continent as string,",
+				"          population as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> sourceDimCountry",
+				"sourceTesting, sourceDimCountry lookup(sourceTesting@country == sourceDimCountry@country,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookupCountry",
+				"lookupCountry, aggregateYearWeek lookup(year_week == year_week_ecdc,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookupDimDate",
+				"sourceDimDate derive(year_week_ecdc = toString(year) + '-W'+ lpad(toString(week_of_year), 2, '0')) ~> addYearWeek",
+				"lookupDimDate select(mapColumn(",
+				"          country = sourceTesting@country,",
+				"          new_cases,",
+				"          tests_done,",
+				"          testing_rate,",
+				"          positivity_rate,",
+				"          testing_data_source,",
+				"          country = sourceDimCountry@country,",
+				"          country_code_2_digit,",
+				"          country_code_3_digit,",
+				"          continent,",
+				"          population = sourceDimCountry@population,",
+				"          reported_year_week = year_week_ecdc,",
+				"          reported_start_date = start_date,",
+				"          reported_end_date = end_date",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectColumn",
+				"addYearWeek aggregate(groupBy(year_week_ecdc),",
+				"     start_date = min(date),",
+				"          end_date = max(date)) ~> aggregateYearWeek",
+				"selectColumn sort(desc(reported_year_week, true),",
+				"     asc(country, true)) ~> sortData",
+				"sortData sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sinkOutput"
+			]
+		}
+	}
+}

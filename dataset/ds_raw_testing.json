@@ -1,5 +1,5 @@
 {
-	"name": "ds_raw_population",
+	"name": "ds_raw_testing",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_dls_covidrepotingdl2609",
@@ -10,69 +10,52 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "population_by_age.tsv",
-				"folderPath": "population",
+				"fileName": "testing.csv",
+				"folderPath": "ecdc/testing",
 				"fileSystem": "raw"
 			},
-			"columnDelimiter": "\t",
+			"columnDelimiter": ",",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
 		"schema": [
 			{
-				"name": "indic_de,geo\\time",
+				"name": "country",
 				"type": "String"
 			},
 			{
-				"name": "2008 ",
+				"name": "country_code",
 				"type": "String"
 			},
 			{
-				"name": "2009 ",
+				"name": "year_week",
 				"type": "String"
 			},
 			{
-				"name": "2010 ",
+				"name": "new_cases",
 				"type": "String"
 			},
 			{
-				"name": "2011 ",
+				"name": "tests_done",
 				"type": "String"
 			},
 			{
-				"name": "2012 ",
+				"name": "population",
 				"type": "String"
 			},
 			{
-				"name": "2013 ",
+				"name": "testing_rate",
 				"type": "String"
 			},
 			{
-				"name": "2014 ",
+				"name": "positivity_rate",
 				"type": "String"
 			},
 			{
-				"name": "2015 ",
-				"type": "String"
-			},
-			{
-				"name": "2016 ",
-				"type": "String"
-			},
-			{
-				"name": "2017 ",
-				"type": "String"
-			},
-			{
-				"name": "2018 ",
-				"type": "String"
-			},
-			{
-				"name": "2019 ",
+				"name": "testing_data_source",
 				"type": "String"
 			}
 		]
-	},
-	"type": "Microsoft.DataFactory/factories/datasets"
+	}
 }
