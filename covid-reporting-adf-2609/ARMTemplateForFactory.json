@@ -437,6 +437,53 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/pl_trans_population')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Trans population",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "df_transform_population",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"sourcePopulation": {},
+									"sourceDimCountry": {},
+									"sink": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/df_transform_population')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ds_ecdc_list_file')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -687,6 +734,62 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/ds_processed_population')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_dls_covidrepotingdl2609",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "ecdc/population",
+						"fileSystem": "processed"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_dls_covidrepotingdl2609')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_processed_testing')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_dls_covidrepotingdl2609",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "ecdc/testing",
+						"fileSystem": "processed"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_dls_covidrepotingdl2609')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ds_raw_cases_deaths')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -914,7 +1017,60 @@
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
 				},
-				"schema": []
+				"schema": [
+					{
+						"name": "indic_de,geo\\time",
+						"type": "String"
+					},
+					{
+						"name": "2008 ",
+						"type": "String"
+					},
+					{
+						"name": "2009 ",
+						"type": "String"
+					},
+					{
+						"name": "2010 ",
+						"type": "String"
+					},
+					{
+						"name": "2011 ",
+						"type": "String"
+					},
+					{
+						"name": "2012 ",
+						"type": "String"
+					},
+					{
+						"name": "2013 ",
+						"type": "String"
+					},
+					{
+						"name": "2014 ",
+						"type": "String"
+					},
+					{
+						"name": "2015 ",
+						"type": "String"
+					},
+					{
+						"name": "2016 ",
+						"type": "String"
+					},
+					{
+						"name": "2017 ",
+						"type": "String"
+					},
+					{
+						"name": "2018 ",
+						"type": "String"
+					},
+					{
+						"name": "2019 ",
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ls_dls_covidrepotingdl2609')]"
@@ -948,6 +1104,72 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ls_blob_covidrepotingsa2609')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_raw_testing')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_dls_covidrepotingdl2609",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "testing.csv",
+						"folderPath": "ecdc/testing",
+						"fileSystem": "raw"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "country",
+						"type": "String"
+					},
+					{
+						"name": "country_code",
+						"type": "String"
+					},
+					{
+						"name": "year_week",
+						"type": "String"
+					},
+					{
+						"name": "new_cases",
+						"type": "String"
+					},
+					{
+						"name": "tests_done",
+						"type": "String"
+					},
+					{
+						"name": "population",
+						"type": "String"
+					},
+					{
+						"name": "testing_rate",
+						"type": "String"
+					},
+					{
+						"name": "positivity_rate",
+						"type": "String"
+					},
+					{
+						"name": "testing_data_source",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_dls_covidrepotingdl2609')]"
 			]
 		},
 		{
@@ -1425,6 +1647,276 @@
 				"[concat(variables('factoryId'), '/datasets/ds_lookup_dim_country')]",
 				"[concat(variables('factoryId'), '/datasets/ds_processed_hospital_admissions_weekly')]",
 				"[concat(variables('factoryId'), '/datasets/ds_processed_hospital_admissions_daily')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_transform_population')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ds_raw_population",
+								"type": "DatasetReference"
+							},
+							"name": "sourcePopulation"
+						},
+						{
+							"dataset": {
+								"referenceName": "ds_lookup_dim_country",
+								"type": "DatasetReference"
+							},
+							"name": "sourceDimCountry"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "ds_processed_population",
+								"type": "DatasetReference"
+							},
+							"name": "sink"
+						}
+					],
+					"transformations": [
+						{
+							"name": "addColumnAgeAndCountry"
+						},
+						{
+							"name": "JoinDimCountry"
+						},
+						{
+							"name": "select"
+						},
+						{
+							"name": "pivot"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          {indic_de,geo\\time} as string,",
+						"          {2008 } as string,",
+						"          {2009 } as string,",
+						"          {2010 } as string,",
+						"          {2011 } as string,",
+						"          {2012 } as string,",
+						"          {2013 } as string,",
+						"          {2014 } as string,",
+						"          {2015 } as string,",
+						"          {2016 } as string,",
+						"          {2017 } as string,",
+						"          {2018 } as string,",
+						"          {2019 } as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> sourcePopulation",
+						"source(output(",
+						"          country as string,",
+						"          country_code_2_digit as string,",
+						"          country_code_3_digit as string,",
+						"          continent as string,",
+						"          population as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> sourceDimCountry",
+						"sourcePopulation derive(age = regexReplace(split({indic_de,geo\\time},',')[1], 'PC_', ''),",
+						"          country_code = split({indic_de,geo\\time},',')[2],",
+						"          {2019 } = round(toDouble(regexReplace({2019 }, '[a-z]', '')) ,2)) ~> addColumnAgeAndCountry",
+						"addColumnAgeAndCountry, sourceDimCountry join(country_code == country_code_2_digit,",
+						"     joinType:'inner',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> JoinDimCountry",
+						"JoinDimCountry select(mapColumn(",
+						"          age,",
+						"          country_code,",
+						"          country,",
+						"          country_code_2_digit,",
+						"          country_code_3_digit,",
+						"          continent,",
+						"          population,",
+						"          percentage_2019 = {2019 }",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select",
+						"select pivot(groupBy(country,",
+						"          country_code_2_digit,",
+						"          country_code_3_digit,",
+						"          continent,",
+						"          population),",
+						"     pivotBy(age),",
+						"     {} = sum(percentage_2019),",
+						"     columnNaming: '$N$V',",
+						"     lateral: true) ~> pivot",
+						"pivot sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_raw_population')]",
+				"[concat(variables('factoryId'), '/datasets/ds_lookup_dim_country')]",
+				"[concat(variables('factoryId'), '/datasets/ds_processed_population')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_transfrom_testing')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ds_raw_testing",
+								"type": "DatasetReference"
+							},
+							"name": "sourceTesting"
+						},
+						{
+							"dataset": {
+								"referenceName": "ds_lookup_dim_date",
+								"type": "DatasetReference"
+							},
+							"name": "sourceDimDate"
+						},
+						{
+							"dataset": {
+								"referenceName": "ds_lookup_dim_country",
+								"type": "DatasetReference"
+							},
+							"name": "sourceDimCountry"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "ds_processed_testing",
+								"type": "DatasetReference"
+							},
+							"name": "sinkOutput"
+						}
+					],
+					"transformations": [
+						{
+							"name": "lookupCountry"
+						},
+						{
+							"name": "lookupDimDate"
+						},
+						{
+							"name": "addYearWeek"
+						},
+						{
+							"name": "selectColumn"
+						},
+						{
+							"name": "aggregateYearWeek"
+						},
+						{
+							"name": "sortData"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          country as string,",
+						"          country_code as string,",
+						"          year_week as string,",
+						"          new_cases as integer,",
+						"          tests_done as integer,",
+						"          population as integer,",
+						"          testing_rate as double,",
+						"          positivity_rate as double,",
+						"          testing_data_source as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> sourceTesting",
+						"source(output(",
+						"          date_key as string,",
+						"          date as date,",
+						"          year as short,",
+						"          month as short,",
+						"          day as short,",
+						"          day_name as string,",
+						"          day_of_year as short,",
+						"          week_of_month as short,",
+						"          week_of_year as short,",
+						"          month_name as string,",
+						"          year_month as integer,",
+						"          year_week as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> sourceDimDate",
+						"source(output(",
+						"          country as string,",
+						"          country_code_2_digit as string,",
+						"          country_code_3_digit as string,",
+						"          continent as string,",
+						"          population as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> sourceDimCountry",
+						"sourceTesting, sourceDimCountry lookup(sourceTesting@country == sourceDimCountry@country,",
+						"     multiple: false,",
+						"     pickup: 'any',",
+						"     broadcast: 'auto')~> lookupCountry",
+						"lookupCountry, aggregateYearWeek lookup(year_week == year_week_ecdc,",
+						"     multiple: false,",
+						"     pickup: 'any',",
+						"     broadcast: 'auto')~> lookupDimDate",
+						"sourceDimDate derive(year_week_ecdc = toString(year) + '-W'+ lpad(toString(week_of_year), 2, '0')) ~> addYearWeek",
+						"lookupDimDate select(mapColumn(",
+						"          country = sourceTesting@country,",
+						"          new_cases,",
+						"          tests_done,",
+						"          testing_rate,",
+						"          positivity_rate,",
+						"          testing_data_source,",
+						"          country = sourceDimCountry@country,",
+						"          country_code_2_digit,",
+						"          country_code_3_digit,",
+						"          continent,",
+						"          population = sourceDimCountry@population,",
+						"          reported_year_week = year_week_ecdc,",
+						"          reported_start_date = start_date,",
+						"          reported_end_date = end_date",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> selectColumn",
+						"addYearWeek aggregate(groupBy(year_week_ecdc),",
+						"     start_date = min(date),",
+						"          end_date = max(date)) ~> aggregateYearWeek",
+						"selectColumn sort(desc(reported_year_week, true),",
+						"     asc(country, true)) ~> sortData",
+						"sortData sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sinkOutput"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_raw_testing')]",
+				"[concat(variables('factoryId'), '/datasets/ds_lookup_dim_date')]",
+				"[concat(variables('factoryId'), '/datasets/ds_lookup_dim_country')]",
+				"[concat(variables('factoryId'), '/datasets/ds_processed_testing')]"
 			]
 		}
 	]
