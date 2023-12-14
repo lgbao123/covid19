@@ -11,6 +11,9 @@
 		"ls_dls_covidrepotingdl2609_accountKey": {
 			"value": ""
 		},
+		"ls_sql_azure_connectionString": {
+			"value": ""
+		},
 		"ls_dls_covidrepotingdl2609_properties_typeProperties_url": {
 			"value": "https://covidrepotingdl2609.dfs.core.windows.net/"
 		},
