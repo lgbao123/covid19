@@ -5,6 +5,9 @@
 			"referenceName": "ls_blob_covidrepotingsa2609",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "lookup"
+		},
 		"annotations": [],
 		"type": "Json",
 		"typeProperties": {

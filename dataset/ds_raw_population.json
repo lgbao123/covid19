@@ -5,6 +5,9 @@
 			"referenceName": "ls_dls_covidrepotingdl2609",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "raw"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
