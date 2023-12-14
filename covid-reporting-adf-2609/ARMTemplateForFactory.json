@@ -172,6 +172,9 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"folder": {
+					"name": "ingest"
+				},
 				"annotations": [],
 				"lastPublishTime": "2023-12-09T16:30:27Z"
 			},
@@ -336,6 +339,9 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"folder": {
+					"name": "ingest"
+				},
 				"annotations": [],
 				"lastPublishTime": "2023-12-09T16:30:27Z"
 			},
@@ -454,6 +460,9 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "process"
 				},
 				"annotations": []
 			},
@@ -576,6 +585,9 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"folder": {
+					"name": "process"
+				},
 				"annotations": []
 			},
 			"dependsOn": [
@@ -624,6 +636,9 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "process"
 				},
 				"annotations": []
 			},
@@ -743,6 +758,9 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"folder": {
+					"name": "process"
+				},
 				"annotations": []
 			},
 			"dependsOn": [
@@ -759,6 +777,9 @@
 				"linkedServiceName": {
 					"referenceName": "ls_blob_covidrepotingsa2609",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "lookup"
 				},
 				"annotations": [],
 				"type": "Json",
@@ -796,6 +817,9 @@
 				"linkedServiceName": {
 					"referenceName": "ls_dls_covidrepotingdl2609",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "lookup"
 				},
 				"annotations": [],
 				"type": "DelimitedText",
@@ -846,6 +870,9 @@
 				"linkedServiceName": {
 					"referenceName": "ls_dls_covidrepotingdl2609",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "lookup"
 				},
 				"annotations": [],
 				"type": "DelimitedText",
@@ -925,6 +952,9 @@
 					"referenceName": "ls_dls_covidrepotingdl2609",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "processed"
+				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
@@ -954,6 +984,9 @@
 					"referenceName": "ls_dls_covidrepotingdl2609",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "processed"
+				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
@@ -981,6 +1014,9 @@
 				"linkedServiceName": {
 					"referenceName": "ls_dls_covidrepotingdl2609",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "processed"
 				},
 				"annotations": [],
 				"type": "DelimitedText",
@@ -1010,6 +1046,9 @@
 					"referenceName": "ls_dls_covidrepotingdl2609",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "processed"
+				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
@@ -1038,6 +1077,9 @@
 					"referenceName": "ls_dls_covidrepotingdl2609",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "processed"
+				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
@@ -1065,6 +1107,9 @@
 				"linkedServiceName": {
 					"referenceName": "ls_dls_covidrepotingdl2609",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "raw"
 				},
 				"annotations": [],
 				"type": "DelimitedText",
@@ -1137,6 +1182,9 @@
 						"type": "string"
 					}
 				},
+				"folder": {
+					"name": "raw"
+				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
@@ -1183,6 +1231,9 @@
 						"type": "string"
 					}
 				},
+				"folder": {
+					"name": "raw"
+				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
@@ -1212,6 +1263,9 @@
 				"linkedServiceName": {
 					"referenceName": "ls_dls_covidrepotingdl2609",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "raw"
 				},
 				"annotations": [],
 				"type": "DelimitedText",
@@ -1270,6 +1324,9 @@
 				"linkedServiceName": {
 					"referenceName": "ls_dls_covidrepotingdl2609",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "raw"
 				},
 				"annotations": [],
 				"type": "DelimitedText",
@@ -1353,6 +1410,9 @@
 					"referenceName": "ls_blob_covidrepotingsa2609",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "raw"
+				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
@@ -1382,6 +1442,9 @@
 				"linkedServiceName": {
 					"referenceName": "ls_dls_covidrepotingdl2609",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "raw"
 				},
 				"annotations": [],
 				"type": "DelimitedText",
@@ -1449,6 +1512,9 @@
 					"referenceName": "ls_sql_azure",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "sql"
+				},
 				"annotations": [],
 				"type": "AzureSqlTable",
 				"schema": [
@@ -1505,6 +1571,9 @@
 				"linkedServiceName": {
 					"referenceName": "ls_sql_azure",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "sql"
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
@@ -1566,6 +1635,9 @@
 				"linkedServiceName": {
 					"referenceName": "ls_sql_azure",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "sql"
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",

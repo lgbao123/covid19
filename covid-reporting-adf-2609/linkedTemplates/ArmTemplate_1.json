@@ -25,6 +25,9 @@
 					"referenceName": "ls_sql_azure",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "sql"
+				},
 				"annotations": [],
 				"type": "AzureSqlTable",
 				"schema": [
@@ -83,6 +86,9 @@
 				"linkedServiceName": {
 					"referenceName": "ls_sql_azure",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "sql"
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
@@ -229,6 +235,9 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "ingest"
 				},
 				"annotations": [],
 				"lastPublishTime": "2023-12-09T16:30:27Z"
@@ -389,6 +398,9 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "ingest"
 				},
 				"annotations": [],
 				"lastPublishTime": "2023-12-09T16:30:27Z"
@@ -1124,6 +1136,9 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"folder": {
+					"name": "process"
+				},
 				"annotations": []
 			},
 			"dependsOn": [
@@ -1243,6 +1258,9 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"folder": {
+					"name": "process"
+				},
 				"annotations": []
 			},
 			"dependsOn": [
@@ -1290,6 +1308,9 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "process"
 				},
 				"annotations": []
 			},
@@ -1408,6 +1429,9 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "process"
 				},
 				"annotations": []
 			},
