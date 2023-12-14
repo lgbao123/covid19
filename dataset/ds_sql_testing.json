@@ -1,0 +1,16 @@
+{
+	"name": "ds_sql_testing",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sql_azure",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "covid_reporting",
+			"table": "testing"
+		}
+	}
+}

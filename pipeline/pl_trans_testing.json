@@ -1,9 +1,9 @@
 {
-	"name": "pl_trans_hospital_admissions_data",
+	"name": "pl_trans_testing",
 	"properties": {
 		"activities": [
 			{
-				"name": "Transform hospital_admissions",
+				"name": "Trans testing",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "df_transform_hospital_admissions",
+						"referenceName": "df_transfrom_testing",
 						"type": "DataFlowReference"
 					},
 					"compute": {
@@ -27,11 +27,11 @@
 				}
 			},
 			{
-				"name": "Copy Hospital admissions to sql",
+				"name": "Copy testing to sql",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Transform hospital_admissions",
+						"activity": "Trans testing",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -65,7 +65,7 @@
 							"useTempDB": false,
 							"keys": [
 								"country",
-								"reported_date"
+								"reported_year_week"
 							]
 						},
 						"sqlWriterUseTableLock": false,
@@ -83,13 +83,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "ds_processed_hospital_admissions_daily",
+						"referenceName": "ds_processed_testing",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_sql_hospital_admissions_daily",
+						"referenceName": "ds_sql_testing",
 						"type": "DatasetReference"
 					}
 				]
