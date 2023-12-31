@@ -13,11 +13,11 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "population.csv",
-				"folderPath": "population",
+				"fileName": "locations.csv",
+				"folderPath": "country",
 				"fileSystem": "raw"
 			},
-			"columnDelimiter": "\t",
+			"columnDelimiter": ",",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
 			"quoteChar": "\""

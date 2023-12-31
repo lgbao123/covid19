@@ -14,7 +14,7 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": "testing.csv",
-				"folderPath": "ecdc/testing",
+				"folderPath": "testing",
 				"fileSystem": "raw"
 			},
 			"columnDelimiter": ",",

@@ -2,7 +2,7 @@
 	"name": "ds_ecdc_list_file",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "ls_blob_covidrepotingsa2609",
+			"referenceName": "ls_dls_covidrepotingdl2609",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
@@ -12,9 +12,9 @@
 		"type": "Json",
 		"typeProperties": {
 			"location": {
-				"type": "AzureBlobStorageLocation",
+				"type": "AzureBlobFSLocation",
 				"fileName": "ecdc-file-list.json",
-				"container": "configs"
+				"fileSystem": "lookup"
 			}
 		},
 		"schema": {

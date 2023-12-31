@@ -22,7 +22,6 @@
 					"value": "@dataset().sinkFileName",
 					"type": "Expression"
 				},
-				"folderPath": "ecdc",
 				"fileSystem": "raw"
 			},
 			"columnDelimiter": ",",
