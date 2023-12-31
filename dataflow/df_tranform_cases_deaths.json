@@ -13,7 +13,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "ds_lookup_dim_country",
+						"referenceName": "ds_raw_population",
 						"type": "DatasetReference"
 					},
 					"name": "CountrySource"
@@ -34,12 +34,6 @@
 			],
 			"transformations": [
 				{
-					"name": "SelectRequiredField"
-				},
-				{
-					"name": "PivotCount"
-				},
-				{
 					"name": "LookupCountry"
 				},
 				{
@@ -47,72 +41,58 @@
 				},
 				{
 					"name": "FilterNullContinent"
+				},
+				{
+					"name": "filterForOnlyEurope"
 				}
 			],
 			"scriptLines": [
 				"source(output(",
-				"          country as string,",
-				"          country_code as string,",
-				"          continent as string,",
-				"          population as integer,",
-				"          indicator as string,",
-				"          daily_count as short,",
 				"          date as date,",
-				"          rate_14_day as double,",
-				"          source as string",
+				"          location as string,",
+				"          new_cases as double,",
+				"          new_deaths as double,",
+				"          total_cases as double,",
+				"          total_deaths as double,",
+				"          weekly_cases as double,",
+				"          weekly_deaths as double,",
+				"          biweekly_cases as double,",
+				"          biweekly_deaths as double",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> CasesDeathsSource",
 				"source(output(",
-				"          country as string,",
-				"          country_code_2_digit as string,",
-				"          country_code_3_digit as string,",
+				"          countriesAndTerritories as string,",
+				"          location as string,",
 				"          continent as string,",
-				"          population as string",
+				"          population_year as short,",
+				"          population as integer",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> CountrySource",
-				"FilterNullContinent select(mapColumn(",
-				"          country,",
-				"          country_code,",
-				"          population,",
-				"          indicator,",
-				"          daily_count,",
-				"          reported_date = date,",
-				"          source",
-				"     ),",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> SelectRequiredField",
-				"SelectRequiredField pivot(groupBy(country,",
-				"          country_code,",
-				"          population,",
-				"          reported_date,",
-				"          source),",
-				"     pivotBy(indicator, ['confirmed cases', 'deaths']),",
-				"     count = sum(daily_count),",
-				"     columnNaming: '$N_$V',",
-				"     lateral: true) ~> PivotCount",
-				"PivotCount, CountrySource lookup(PivotCount@country == CountrySource@country,",
+				"FilterNullContinent, CountrySource lookup(CasesDeathsSource@location == CountrySource@location,",
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> LookupCountry",
 				"LookupCountry select(mapColumn(",
-				"          country = PivotCount@country,",
+				"          date,",
+				"          location = CasesDeathsSource@location,",
 				"          continent,",
-				"          country_code_2_digit,",
-				"          country_code_3_digit,",
-				"          reported_date,",
-				"          population = PivotCount@population,",
-				"          count_deaths,",
-				"          count_cases = {count_confirmed cases},",
-				"          source",
+				"          population,",
+				"          new_cases,",
+				"          new_deaths,",
+				"          total_cases,",
+				"          total_deaths,",
+				"          weekly_cases,",
+				"          weekly_deaths",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectForSink",
-				"CasesDeathsSource filter(not(isNull(country_code))) ~> FilterNullContinent",
-				"SelectForSink sink(allowSchemaDrift: true,",
+				"CasesDeathsSource filter(not(isNull(location))) ~> FilterNullContinent",
+				"SelectForSink filter(continent=='Europe') ~> filterForOnlyEurope",
+				"filterForOnlyEurope sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:['cases_deadths.csv'],",
 				"     truncate: true,",
@@ -121,7 +101,10 @@
 				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> CasesDeathsSink"
+				"     partitionBy('key',",
+				"          0,",
+				"          location",
+				"     )) ~> CasesDeathsSink"
 			]
 		}
 	}
