@@ -29,6 +29,8 @@
 			{
 				"name": "Copy Hospital admissions to sql",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Transform hospital_admissions",

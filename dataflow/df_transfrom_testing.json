@@ -127,7 +127,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectColumn",
-				"selectColumn sort(desc(reported_year_week, true),",
+				"selectColumn sort(asc(date, true),",
 				"     asc(country, true)) ~> sortData",
 				"sourceDimDate derive(year_week = concat(toString(year),'-W',lpad( toString(week_of_year) , 2, '0')),",
 				"          year_month = concat(toString(year),'-M',lpad( toString(month) , 2, '0'))) ~> derivedColumnDimDate",

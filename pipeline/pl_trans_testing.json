@@ -29,6 +29,8 @@
 			{
 				"name": "Copy testing to sql",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Trans testing",
