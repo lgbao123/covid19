@@ -5,6 +5,8 @@
 			{
 				"name": "Trans testing",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -29,8 +31,6 @@
 			{
 				"name": "Copy testing to sql",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Trans testing",
@@ -53,8 +53,9 @@
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
 							"recursive": true,
-							"wildcardFileName": "*",
-							"enablePartitionDiscovery": false
+							"wildcardFileName": "*.csv",
+							"enablePartitionDiscovery": true,
+							"partitionRootPath": "processed/testing"
 						},
 						"formatSettings": {
 							"type": "DelimitedTextReadSettings"
@@ -67,7 +68,7 @@
 							"useTempDB": false,
 							"keys": [
 								"country",
-								"reported_year_week"
+								"date"
 							]
 						},
 						"sqlWriterUseTableLock": false,

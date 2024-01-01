@@ -5,6 +5,8 @@
 			{
 				"name": "Trans cases and deaths",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -29,8 +31,6 @@
 			{
 				"name": "Copy cases and deaths to sql",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Trans cases and deaths",
@@ -53,7 +53,9 @@
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
 							"recursive": true,
-							"enablePartitionDiscovery": false
+							"wildcardFileName": "*.csv",
+							"enablePartitionDiscovery": true,
+							"partitionRootPath": "processed/cases_deaths"
 						},
 						"formatSettings": {
 							"type": "DelimitedTextReadSettings"
@@ -65,7 +67,8 @@
 						"upsertSettings": {
 							"useTempDB": false,
 							"keys": [
-								"country"
+								"country",
+								"date"
 							]
 						},
 						"sqlWriterUseTableLock": false,
