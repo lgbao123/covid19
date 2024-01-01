@@ -13,7 +13,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "ds_raw_population",
+						"referenceName": "ds_lookup_dim_country",
 						"type": "DatasetReference"
 					},
 					"name": "CountrySource"
@@ -25,11 +25,7 @@
 						"referenceName": "ds_processed_cases_deaths",
 						"type": "DatasetReference"
 					},
-					"name": "CasesDeathsSink",
-					"rejectedDataLinkedService": {
-						"referenceName": "ls_dls_covidrepotingdl2609",
-						"type": "LinkedServiceReference"
-					}
+					"name": "CasesAndDeathsSink"
 				}
 			],
 			"transformations": [
@@ -94,7 +90,6 @@
 				"SelectForSink filter(continent=='Europe') ~> filterForOnlyEurope",
 				"filterForOnlyEurope sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     partitionFileNames:['cases_deadths.csv'],",
 				"     truncate: true,",
 				"     umask: 0022,",
 				"     preCommands: [],",
@@ -103,8 +98,8 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     partitionBy('key',",
 				"          0,",
-				"          location",
-				"     )) ~> CasesDeathsSink"
+				"          date",
+				"     )) ~> CasesAndDeathsSink"
 			]
 		}
 	}

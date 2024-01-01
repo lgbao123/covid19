@@ -20,7 +20,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "ds_raw_population",
+						"referenceName": "ds_lookup_dim_country",
 						"type": "DatasetReference"
 					},
 					"name": "sourceDimCountry"
