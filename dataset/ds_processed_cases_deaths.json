@@ -13,8 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "cases_deadths.csv",
-				"folderPath": "ecdc/cases_deaths",
+				"folderPath": "cases_deaths",
 				"fileSystem": "processed"
 			},
 			"columnDelimiter": ",",

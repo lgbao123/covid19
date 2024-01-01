@@ -187,7 +187,11 @@
 				"     preCommands: [],",
 				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sinkWeekly",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('key',",
+				"          0,",
+				"          date",
+				"     )) ~> sinkWeekly",
 				"sortDaily sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     truncate: true,",
@@ -195,7 +199,11 @@
 				"     preCommands: [],",
 				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sinkDaily"
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('key',",
+				"          0,",
+				"          date",
+				"     )) ~> sinkDaily"
 			]
 		}
 	}
