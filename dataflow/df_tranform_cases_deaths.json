@@ -74,7 +74,7 @@
 				"     broadcast: 'auto')~> LookupCountry",
 				"LookupCountry select(mapColumn(",
 				"          date,",
-				"          location = CasesDeathsSource@location,",
+				"          country = CasesDeathsSource@location,",
 				"          continent,",
 				"          population,",
 				"          new_cases,",
@@ -98,7 +98,7 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     partitionBy('key',",
 				"          0,",
-				"          date",
+				"          country",
 				"     )) ~> CasesAndDeathsSink"
 			]
 		}

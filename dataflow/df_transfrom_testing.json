@@ -53,6 +53,9 @@
 				},
 				{
 					"name": "derivedColumnCountry"
+				},
+				{
+					"name": "filterOnlyEurope"
 				}
 			],
 			"scriptLines": [
@@ -106,7 +109,7 @@
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> lookupCountry",
-				"lookupCountry, derivedColumnDimDate lookup(sourceTesting@Date == sourceDimDate@date,",
+				"filterOnlyEurope, derivedColumnDimDate lookup(sourceTesting@Date == sourceDimDate@date,",
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> lookupDimDate",
@@ -129,6 +132,7 @@
 				"sourceDimDate derive(year_week = concat(toString(year),'-W',lpad( toString(week_of_year) , 2, '0')),",
 				"          year_month = concat(toString(year),'-M',lpad( toString(month) , 2, '0'))) ~> derivedColumnDimDate",
 				"sourceTesting derive(country = trim(split(Entity,\"-\")[1])) ~> derivedColumnCountry",
+				"lookupCountry filter(continent=='Europe') ~> filterOnlyEurope",
 				"sortData sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     truncate: true,",
@@ -139,7 +143,7 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     partitionBy('key',",
 				"          0,",
-				"          date",
+				"          country",
 				"     )) ~> sinkOutput"
 			]
 		}

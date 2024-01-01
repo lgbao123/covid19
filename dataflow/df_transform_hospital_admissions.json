@@ -72,6 +72,9 @@
 				},
 				{
 					"name": "selectWeekly"
+				},
+				{
+					"name": "filterOnlyEurope"
 				}
 			],
 			"scriptLines": [
@@ -119,7 +122,7 @@
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> lookupCountry",
-				"lookupCountry select(mapColumn(",
+				"filterOnlyEurope select(mapColumn(",
 				"          country = entity,",
 				"          iso_code,",
 				"          continent,",
@@ -180,6 +183,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectWeekly",
+				"lookupCountry filter(continent=='Europe') ~> filterOnlyEurope",
 				"sortWeekly sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     truncate: true,",
@@ -190,7 +194,7 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     partitionBy('key',",
 				"          0,",
-				"          date",
+				"          country",
 				"     )) ~> sinkWeekly",
 				"sortDaily sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
@@ -202,7 +206,7 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     partitionBy('key',",
 				"          0,",
-				"          date",
+				"          country",
 				"     )) ~> sinkDaily"
 			]
 		}
