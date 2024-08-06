@@ -19,7 +19,19 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "df_transfrom_testing",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"sourceTesting": {
+								"year": "2024",
+								"month": "08",
+								"day": "06"
+							},
+							"sourceDimCountry": {
+								"year": "2024",
+								"month": "08",
+								"day": "06"
+							}
+						}
 					},
 					"compute": {
 						"coreCount": 8,
