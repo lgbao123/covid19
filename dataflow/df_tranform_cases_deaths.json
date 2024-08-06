@@ -17,6 +17,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "CountrySource"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_raw_cases_deaths",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
 				}
 			],
 			"sinks": [
@@ -43,6 +50,11 @@
 				}
 			],
 			"scriptLines": [
+				"parameters{",
+				"     year as integer (2024),",
+				"     month as string ('08'),",
+				"     day as string ('06')",
+				"}",
 				"source(output(",
 				"          date as date,",
 				"          location as string,",
@@ -68,6 +80,20 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> CountrySource",
+				"source(output(",
+				"          country as string,",
+				"          country_code as string,",
+				"          continent as string,",
+				"          population as string,",
+				"          indicator as string,",
+				"          daily_count as string,",
+				"          date as string,",
+				"          rate_14_day as string,",
+				"          source as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
 				"FilterNullContinent, CountrySource lookup(CasesDeathsSource@location == CountrySource@location,",
 				"     multiple: false,",
 				"     pickup: 'any',",

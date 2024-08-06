@@ -5,6 +5,20 @@
 			"referenceName": "ls_dls_covidrepotingdl2609",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"year": {
+				"type": "string",
+				"defaultValue": "2024"
+			},
+			"month": {
+				"type": "string",
+				"defaultValue": "08"
+			},
+			"day": {
+				"type": "string",
+				"defaultValue": "06"
+			}
+		},
 		"folder": {
 			"name": "lookup"
 		},
