@@ -33,21 +33,19 @@
 					"name": "LookupCountry"
 				},
 				{
-					"name": "SelectForSink"
+					"name": "SelectContinent"
 				},
 				{
 					"name": "FilterNullContinent"
 				},
 				{
 					"name": "filterForOnlyEurope"
+				},
+				{
+					"name": "SelectForSink"
 				}
 			],
 			"scriptLines": [
-				"parameters{",
-				"     year as integer (2024),",
-				"     month as string ('08'),",
-				"     day as string ('06')",
-				"}",
 				"source(output(",
 				"          date as date,",
 				"          location as string,",
@@ -90,11 +88,24 @@
 				"          weekly_deaths",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> SelectForSink",
+				"     skipDuplicateMapOutputs: true) ~> SelectContinent",
 				"CasesDeathsSource filter(not(isNull(location))) ~> FilterNullContinent",
-				"SelectForSink filter(continent=='Europe') ~> filterForOnlyEurope",
-				"filterForOnlyEurope sink(allowSchemaDrift: true,",
+				"SelectContinent filter(continent=='Europe') ~> filterForOnlyEurope",
+				"filterForOnlyEurope select(mapColumn(",
+				"          date,",
+				"          country,",
+				"          new_cases,",
+				"          new_deaths,",
+				"          total_cases,",
+				"          total_deaths,",
+				"          weekly_cases,",
+				"          weekly_deaths",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectForSink",
+				"SelectForSink sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     format: 'parquet',",
 				"     truncate: true,",
 				"     umask: 0022,",
 				"     preCommands: [],",

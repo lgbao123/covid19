@@ -1,0 +1,23 @@
+{
+	"name": "ds_processed_cases_deaths",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_dls_covidrepotingdl2609",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "processed"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "cases_deaths",
+				"fileSystem": "processed"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
