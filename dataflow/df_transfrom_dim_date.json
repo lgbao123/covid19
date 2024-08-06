@@ -21,7 +21,11 @@
 					"name": "sinkToSql"
 				}
 			],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "selectCol"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          day_key as string,",
@@ -40,7 +44,23 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> sourceDImDate",
-				"sourceDImDate sink(allowSchemaDrift: true,",
+				"sourceDImDate select(mapColumn(",
+				"          date_key = day_key,",
+				"          date,",
+				"          day,",
+				"          month,",
+				"          year,",
+				"          day_name,",
+				"          month_name,",
+				"          day_of_year,",
+				"          week_of_year,",
+				"          week_of_month,",
+				"          week_begin_date,",
+				"          week_end_date",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectCol",
+				"selectCol sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
 				"     insertable:true,",

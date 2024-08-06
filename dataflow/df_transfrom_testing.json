@@ -13,13 +13,6 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "ds_lookup_dim_date",
-						"type": "DatasetReference"
-					},
-					"name": "sourceDimDate"
-				},
-				{
-					"dataset": {
 						"referenceName": "ds_lookup_dim_country",
 						"type": "DatasetReference"
 					},
@@ -28,6 +21,10 @@
 			],
 			"sinks": [
 				{
+					"dataset": {
+						"referenceName": "ds_processed_testing",
+						"type": "DatasetReference"
+					},
 					"name": "sinkOutput"
 				}
 			],
@@ -37,9 +34,6 @@
 				},
 				{
 					"name": "sortData"
-				},
-				{
-					"name": "derivedColumnDimDate"
 				},
 				{
 					"name": "CreateCountryCol"
@@ -55,25 +49,22 @@
 				"source(output(",
 				"          Entity as string,",
 				"          {ISO code} as string,",
-				"          Date as string,",
+				"          Date as date,",
 				"          {Source URL} as string,",
 				"          {Source label} as string,",
 				"          Notes as string,",
-				"          {Cumulative total} as string,",
-				"          {Daily change in cumulative total} as string,",
-				"          {Cumulative total per thousand} as string,",
-				"          {Daily change in cumulative total per thousand} as string,",
-				"          {7-day smoothed daily change} as string,",
-				"          {7-day smoothed daily change per thousand} as string,",
-				"          {Short-term positive rate} as string,",
-				"          {Short-term tests per case} as string",
+				"          {Cumulative total} as integer,",
+				"          {Daily change in cumulative total} as short,",
+				"          {Cumulative total per thousand} as double,",
+				"          {Daily change in cumulative total per thousand} as double,",
+				"          {7-day smoothed daily change} as short,",
+				"          {7-day smoothed daily change per thousand} as double,",
+				"          {Short-term positive rate} as double,",
+				"          {Short-term tests per case} as double",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> sourceTesting",
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> sourceDimDate",
 				"source(output(",
 				"          countriesAndTerritories as string,",
 				"          location as string,",
@@ -85,12 +76,8 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> sourceDimCountry",
 				"joinCountry select(mapColumn(",
-				"          country,",
-				"          continent,",
-				"          population,",
 				"          date = Date,",
-				"          year_week,",
-				"          year_month,",
+				"          country,",
 				"          total = {Cumulative total},",
 				"          daily_total = {Daily change in cumulative total},",
 				"          positive_rate = {Short-term positive rate},",
@@ -100,8 +87,6 @@
 				"     skipDuplicateMapOutputs: true) ~> selectColumn",
 				"selectColumn sort(asc(date, true),",
 				"     asc(country, true)) ~> sortData",
-				"sourceDimDate derive(year_week = concat(toString(year),'-W',lpad( toString(week_of_year) , 2, '0')),",
-				"          year_month = concat(toString(year),'-M',lpad( toString(month) , 2, '0'))) ~> derivedColumnDimDate",
 				"sourceTesting derive(country = trim(split(Entity,\"-\")[1])) ~> CreateCountryCol",
 				"sourceDimCountry filter(continent=='Europe') ~> filterEurope",
 				"CreateCountryCol, filterEurope join(country == location,",
@@ -111,15 +96,17 @@
 				"     broadcast: 'auto')~> joinCountry",
 				"sortData sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     format: 'parquet',",
 				"     truncate: true,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     partitionBy('key',",
 				"          0,",
 				"          country",
-				"     ),",
-				"     preCommands: [],",
-				"     postCommands: []) ~> sinkOutput"
+				"     )) ~> sinkOutput"
 			]
 		}
 	}

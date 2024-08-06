@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "sql"
+			"name": "processed"
 		},
 		"annotations": [],
 		"type": "Parquet",

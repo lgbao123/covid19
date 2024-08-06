@@ -74,7 +74,7 @@
 					"name": "joinCountry"
 				},
 				{
-					"name": "convertType"
+					"name": "convertTypeReplaceNull"
 				}
 			],
 			"scriptLines": [
@@ -126,7 +126,7 @@
 				"     lateral: true) ~> pivotDaily",
 				"selectWeekly sort(desc(date, true),",
 				"     asc(country, true)) ~> sortWeekly",
-				"convertType sort(desc(date, true),",
+				"convertTypeReplaceNull sort(desc(date, true),",
 				"     asc(country, true)) ~> sortDaily",
 				"pivotDaily select(mapColumn(",
 				"          country,",
@@ -138,12 +138,7 @@
 				"     skipDuplicateMapOutputs: true) ~> selectDailyCol",
 				"pivotWeekly select(mapColumn(",
 				"          country,",
-				"          iso_code,",
-				"          continent,",
-				"          population,",
 				"          date,",
-				"          week_begin_date,",
-				"          week_end_date,",
 				"          new_hospital_admissions = {Weekly new hospital admissions},",
 				"          new_icu_admissions = {Weekly new ICU admissions}",
 				"     ),",
@@ -155,8 +150,8 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> joinCountry",
-				"selectDailyCol derive(daily_hospital_occupancy = toInteger(daily_hospital_occupancy),",
-				"          daily_ICU_occupancy = toInteger(daily_icu_occupancy)) ~> convertType",
+				"selectDailyCol derive(daily_hospital_occupancy = coalesce(toInteger(daily_hospital_occupancy),0),",
+				"          daily_icu_occupancy = coalesce(toInteger(daily_icu_occupancy),0)) ~> convertTypeReplaceNull",
 				"sortWeekly sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'parquet',",
@@ -172,6 +167,12 @@
 				"     )) ~> sinkWeekly",
 				"sortDaily sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     input(",
+				"          date as date,",
+				"          daily_hospital_occupancy as integer,",
+				"          daily_icu_occupancy as integer,",
+				"          country as string",
+				"     ),",
 				"     format: 'parquet',",
 				"     truncate: true,",
 				"     umask: 0022,",

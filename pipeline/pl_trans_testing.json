@@ -25,11 +25,6 @@
 								"year": "2024",
 								"month": "08",
 								"day": "06"
-							},
-							"sourceDimCountry": {
-								"year": "2024",
-								"month": "08",
-								"day": "06"
 							}
 						}
 					},
@@ -60,6 +55,19 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"source": {
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"wildcardFileName": "*.parquet",
+							"enablePartitionDiscovery": true,
+							"partitionRootPath": "processed/testing"
+						},
+						"formatSettings": {
+							"type": "ParquetReadSettings"
+						}
+					},
 					"sink": {
 						"type": "AzureSqlSink",
 						"writeBehavior": "upsert",
@@ -81,11 +89,13 @@
 							{
 								"source": {
 									"name": "date",
-									"type": "Date"
+									"type": "DateTime",
+									"physicalType": "DATE"
 								},
 								"sink": {
 									"name": "date",
-									"type": "Date"
+									"type": "DateTime",
+									"physicalType": "datetime2"
 								}
 							},
 							{
@@ -95,52 +105,72 @@
 								},
 								"sink": {
 									"name": "country",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
 									"name": "total",
-									"type": "Int32"
+									"type": "Int32",
+									"physicalType": "INT32"
 								},
 								"sink": {
 									"name": "total",
-									"type": "Int32"
+									"type": "Int32",
+									"physicalType": "int"
 								}
 							},
 							{
 								"source": {
 									"name": "daily_total",
-									"type": "Int32"
+									"type": "Int16",
+									"physicalType": "INT_16"
 								},
 								"sink": {
 									"name": "daily_total",
-									"type": "Int32"
+									"type": "Int32",
+									"physicalType": "int"
 								}
 							},
 							{
 								"source": {
 									"name": "positive_rate",
-									"type": "double"
+									"type": "Double",
+									"physicalType": "DOUBLE"
 								},
 								"sink": {
 									"name": "positive_rate",
-									"type": "double"
+									"type": "Double",
+									"physicalType": "float"
 								}
 							},
 							{
 								"source": {
 									"name": "tests_per_case",
-									"type": "double"
+									"type": "Double",
+									"physicalType": "DOUBLE"
 								},
 								"sink": {
 									"name": "tests_per_case",
-									"type": "double"
+									"type": "Double",
+									"physicalType": "float"
 								}
 							}
-						]
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
 					}
 				},
+				"inputs": [
+					{
+						"referenceName": "ds_processed_testing",
+						"type": "DatasetReference"
+					}
+				],
 				"outputs": [
 					{
 						"referenceName": "ds_sql_testing",

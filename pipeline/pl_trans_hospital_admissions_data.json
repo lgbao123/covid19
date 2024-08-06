@@ -48,6 +48,19 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"source": {
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"wildcardFileName": "*.parquet",
+							"enablePartitionDiscovery": true,
+							"partitionRootPath": "processed/hospital_admissions_daily"
+						},
+						"formatSettings": {
+							"type": "ParquetReadSettings"
+						}
+					},
 					"sink": {
 						"type": "AzureSqlSink",
 						"writeBehavior": "upsert",
@@ -69,11 +82,12 @@
 							{
 								"source": {
 									"name": "date",
-									"type": "Date"
+									"type": "DateTime",
+									"physicalType": "DATE"
 								},
 								"sink": {
 									"name": "date",
-									"type": "Date"
+									"physicalType": "date"
 								}
 							},
 							{
@@ -83,32 +97,48 @@
 								},
 								"sink": {
 									"name": "country",
-									"type": "String"
+									"type": "String",
+									"physicalType": "varchar"
 								}
 							},
 							{
 								"source": {
-									"name": "hospital_occupancy",
-									"type": "Int32"
+									"name": "daily_hospital_occupancy",
+									"type": "Int32",
+									"physicalType": "INT32"
 								},
 								"sink": {
-									"name": "hospital_occupancy",
-									"type": "Int32"
+									"name": "hospital_occupancy_count",
+									"type": "Int64",
+									"physicalType": "bigint"
 								}
 							},
 							{
 								"source": {
-									"name": "icu_occupancy",
-									"type": "Int32"
+									"name": "daily_icu_occupancy",
+									"type": "Int32",
+									"physicalType": "INT32"
 								},
 								"sink": {
-									"name": "icu_occupancy",
-									"type": "Int32"
+									"name": "icu_occupancy_count",
+									"type": "Int64",
+									"physicalType": "bigint"
 								}
 							}
-						]
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
 					}
 				},
+				"inputs": [
+					{
+						"referenceName": "ds_processed_hospital_admissions_daily",
+						"type": "DatasetReference"
+					}
+				],
 				"outputs": [
 					{
 						"referenceName": "ds_sql_hospital_admissions_daily",
