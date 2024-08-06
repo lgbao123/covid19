@@ -8,6 +8,9 @@
 		"parameters": {
 			"sinkFileName": {
 				"type": "string"
+			},
+			"sourceName": {
+				"type": "string"
 			}
 		},
 		"folder": {
@@ -20,6 +23,10 @@
 				"type": "AzureBlobFSLocation",
 				"fileName": {
 					"value": "@dataset().sinkFileName",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@concat(\n    'Owid/',\n    'Covid_19/',\n    concat(dataset().sourceName,'/'),\n    concat('year=',utcNow('yyyy'),'/'),\n    concat('month=',utcNow('MM'),'/'),\n    concat('day=',utcNow('dd'))\n\n)",
 					"type": "Expression"
 				},
 				"fileSystem": "raw"

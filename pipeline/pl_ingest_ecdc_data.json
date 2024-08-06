@@ -119,6 +119,10 @@
 										"sinkFileName": {
 											"value": "@item().sinkFileName",
 											"type": "Expression"
+										},
+										"sourceName": {
+											"value": "@item().souceName",
+											"type": "Expression"
 										}
 									}
 								}
