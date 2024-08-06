@@ -5,17 +5,6 @@
 			"referenceName": "ls_dls_covidrepotingdl2609",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"year": {
-				"type": "string"
-			},
-			"month": {
-				"type": "string"
-			},
-			"day": {
-				"type": "string"
-			}
-		},
 		"folder": {
 			"name": "raw"
 		},

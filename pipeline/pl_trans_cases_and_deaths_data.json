@@ -49,16 +49,16 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "DelimitedTextSource",
+						"type": "ParquetSource",
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
 							"recursive": true,
-							"wildcardFileName": "*.csv",
+							"wildcardFileName": "*.parquet",
 							"enablePartitionDiscovery": true,
 							"partitionRootPath": "processed/cases_deaths"
 						},
 						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
+							"type": "ParquetReadSettings"
 						}
 					},
 					"sink": {
@@ -82,109 +82,13 @@
 							{
 								"source": {
 									"name": "date",
-									"type": "Date",
-									"physicalType": "Date"
+									"type": "DateTime",
+									"physicalType": "DATE"
 								},
 								"sink": {
 									"name": "date",
-									"type": "Date",
-									"physicalType": "Date"
-								}
-							},
-							{
-								"source": {
-									"name": "continent",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "continent",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "population",
-									"type": "Int32",
-									"physicalType": "Int32"
-								},
-								"sink": {
-									"name": "population",
-									"type": "Int32",
-									"physicalType": "Int32"
-								}
-							},
-							{
-								"source": {
-									"name": "new_cases",
-									"type": "Int32",
-									"physicalType": "Int32"
-								},
-								"sink": {
-									"name": "new_cases",
-									"type": "Int32",
-									"physicalType": "Int32"
-								}
-							},
-							{
-								"source": {
-									"name": "new_deaths",
-									"type": "Int32",
-									"physicalType": "Int32"
-								},
-								"sink": {
-									"name": "new_deaths",
-									"type": "Int32",
-									"physicalType": "Int32"
-								}
-							},
-							{
-								"source": {
-									"name": "total_cases",
-									"type": "Int32",
-									"physicalType": "Int32"
-								},
-								"sink": {
-									"name": "total_cases",
-									"type": "Int32",
-									"physicalType": "Int32"
-								}
-							},
-							{
-								"source": {
-									"name": "total_deaths",
-									"type": "Int32",
-									"physicalType": "Int32"
-								},
-								"sink": {
-									"name": "total_deaths",
-									"type": "Int32",
-									"physicalType": "Int32"
-								}
-							},
-							{
-								"source": {
-									"name": "weekly_cases",
-									"type": "Int32",
-									"physicalType": "Int32"
-								},
-								"sink": {
-									"name": "weekly_cases",
-									"type": "Int32",
-									"physicalType": "Int32"
-								}
-							},
-							{
-								"source": {
-									"name": "weekly_deaths",
-									"type": "Int32",
-									"physicalType": "Int32"
-								},
-								"sink": {
-									"name": "weekly_deaths",
-									"type": "Int32",
-									"physicalType": "Int32"
+									"type": "DateTime",
+									"physicalType": "date"
 								}
 							},
 							{
@@ -193,9 +97,79 @@
 									"type": "String"
 								},
 								"sink": {
-									"name": "country",
-									"type": "String",
-									"physicalType": "nvarchar"
+									"name": "country"
+								}
+							},
+							{
+								"source": {
+									"name": "new_cases",
+									"type": "Int32",
+									"physicalType": "INT32"
+								},
+								"sink": {
+									"name": "new_cases",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "new_deaths",
+									"type": "Int32",
+									"physicalType": "INT32"
+								},
+								"sink": {
+									"name": "new_deaths",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "total_cases",
+									"type": "Int32",
+									"physicalType": "INT32"
+								},
+								"sink": {
+									"name": "total_cases",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "total_deaths",
+									"type": "Int32",
+									"physicalType": "INT32"
+								},
+								"sink": {
+									"name": "total_deaths",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "weekly_cases",
+									"type": "Int32",
+									"physicalType": "INT32"
+								},
+								"sink": {
+									"name": "weekly_cases",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "weekly_deaths",
+									"type": "Int32",
+									"physicalType": "INT32"
+								},
+								"sink": {
+									"name": "weekly_deaths",
+									"type": "Int32",
+									"physicalType": "int"
 								}
 							}
 						],

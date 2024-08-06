@@ -1,26 +1,22 @@
 {
-	"name": "ds_lookup_dim_date",
+	"name": "ds_processed_testing",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_dls_covidrepotingdl2609",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "lookup"
+			"name": "sql"
 		},
 		"annotations": [],
-		"type": "DelimitedText",
+		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "dim_date.csv",
-				"folderPath": "dim_date",
-				"fileSystem": "raw"
+				"folderPath": "testing",
+				"fileSystem": "processed"
 			},
-			"columnDelimiter": ",",
-			"escapeChar": "\\",
-			"firstRowAsHeader": true,
-			"quoteChar": "\""
+			"compressionCodec": "snappy"
 		},
 		"schema": []
 	}

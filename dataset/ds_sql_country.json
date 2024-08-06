@@ -1,0 +1,19 @@
+{
+	"name": "ds_sql_country",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sql_azure",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "sql"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "covid_reporting",
+			"table": "country"
+		}
+	}
+}

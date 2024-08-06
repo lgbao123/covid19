@@ -38,39 +38,59 @@
 		},
 		"schema": [
 			{
-				"name": "country",
+				"name": "Entity",
 				"type": "String"
 			},
 			{
-				"name": "country_code",
+				"name": "ISO code",
 				"type": "String"
 			},
 			{
-				"name": "year_week",
+				"name": "Date",
 				"type": "String"
 			},
 			{
-				"name": "new_cases",
+				"name": "Source URL",
 				"type": "String"
 			},
 			{
-				"name": "tests_done",
+				"name": "Source label",
 				"type": "String"
 			},
 			{
-				"name": "population",
+				"name": "Notes",
 				"type": "String"
 			},
 			{
-				"name": "testing_rate",
+				"name": "Cumulative total",
 				"type": "String"
 			},
 			{
-				"name": "positivity_rate",
+				"name": "Daily change in cumulative total",
 				"type": "String"
 			},
 			{
-				"name": "testing_data_source",
+				"name": "Cumulative total per thousand",
+				"type": "String"
+			},
+			{
+				"name": "Daily change in cumulative total per thousand",
+				"type": "String"
+			},
+			{
+				"name": "7-day smoothed daily change",
+				"type": "String"
+			},
+			{
+				"name": "7-day smoothed daily change per thousand",
+				"type": "String"
+			},
+			{
+				"name": "Short-term positive rate",
+				"type": "String"
+			},
+			{
+				"name": "Short-term tests per case",
 				"type": "String"
 			}
 		]

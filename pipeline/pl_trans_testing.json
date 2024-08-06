@@ -60,19 +60,6 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobFSReadSettings",
-							"recursive": true,
-							"wildcardFileName": "*.csv",
-							"enablePartitionDiscovery": true,
-							"partitionRootPath": "processed/testing"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
-					},
 					"sink": {
 						"type": "AzureSqlSink",
 						"writeBehavior": "upsert",
@@ -93,110 +80,12 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "continent",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "continent",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "population",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "population",
-									"type": "Int32",
-									"physicalType": "Int32"
-								}
-							},
-							{
-								"source": {
 									"name": "date",
-									"type": "Date",
-									"physicalType": "Date"
+									"type": "Date"
 								},
 								"sink": {
 									"name": "date",
-									"type": "Date",
-									"physicalType": "Date"
-								}
-							},
-							{
-								"source": {
-									"name": "year_week",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "year_week",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "year_month",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "year_month",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "total",
-									"type": "Int32",
-									"physicalType": "Int32"
-								},
-								"sink": {
-									"name": "total",
-									"type": "Int32",
-									"physicalType": "Int32"
-								}
-							},
-							{
-								"source": {
-									"name": "daily_total",
-									"type": "Int32",
-									"physicalType": "Int32"
-								},
-								"sink": {
-									"name": "daily_total",
-									"type": "Int32",
-									"physicalType": "Int32"
-								}
-							},
-							{
-								"source": {
-									"name": "positive_rate",
-									"type": "double",
-									"physicalType": "double"
-								},
-								"sink": {
-									"name": "positive_rate",
-									"type": "double",
-									"physicalType": "double"
-								}
-							},
-							{
-								"source": {
-									"name": "tests_per_case",
-									"type": "double",
-									"physicalType": "double"
-								},
-								"sink": {
-									"name": "tests_per_case",
-									"type": "double",
-									"physicalType": "double"
+									"type": "Date"
 								}
 							},
 							{
@@ -206,24 +95,52 @@
 								},
 								"sink": {
 									"name": "country",
-									"type": "String",
-									"physicalType": "nvarchar"
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "total",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "total",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "daily_total",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "daily_total",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "positive_rate",
+									"type": "double"
+								},
+								"sink": {
+									"name": "positive_rate",
+									"type": "double"
+								}
+							},
+							{
+								"source": {
+									"name": "tests_per_case",
+									"type": "double"
+								},
+								"sink": {
+									"name": "tests_per_case",
+									"type": "double"
 								}
 							}
-						],
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
+						]
 					}
 				},
-				"inputs": [
-					{
-						"referenceName": "ds_processed_testing",
-						"type": "DatasetReference"
-					}
-				],
 				"outputs": [
 					{
 						"referenceName": "ds_sql_testing",

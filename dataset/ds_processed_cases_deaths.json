@@ -18,6 +18,39 @@
 			},
 			"compressionCodec": "snappy"
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "date",
+				"type": "DATE"
+			},
+			{
+				"name": "new_cases",
+				"type": "INT32"
+			},
+			{
+				"name": "new_deaths",
+				"type": "INT32"
+			},
+			{
+				"name": "total_cases",
+				"type": "INT32"
+			},
+			{
+				"name": "total_deaths",
+				"type": "INT32"
+			},
+			{
+				"name": "weekly_cases",
+				"type": "INT32"
+			},
+			{
+				"name": "weekly_deaths",
+				"type": "INT32"
+			},
+			{
+				"name": "country",
+				"type": "UTF8"
+			}
+		]
 	}
 }
