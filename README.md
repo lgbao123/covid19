@@ -20,7 +20,10 @@ Data include 4 csv files : <b> <i> Cases and Deaths, Hospitalizations, Testing, 
 
 <img src = ./img/covid.png >
 
-## 3. Visualize 
+## 3. Data model
+<img src = ./img/covid_dia.png >
+
+## 4. Visualize 
 
 Data Warehouse to be built with the following data
 to aid Reporting on Trends
