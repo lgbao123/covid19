@@ -9,18 +9,32 @@
 			"name": "processed"
 		},
 		"annotations": [],
-		"type": "DelimitedText",
+		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"folderPath": "hospital_admissions_daily",
 				"fileSystem": "processed"
 			},
-			"columnDelimiter": ",",
-			"escapeChar": "\\",
-			"firstRowAsHeader": true,
-			"quoteChar": "\""
+			"compressionCodec": "snappy"
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "date",
+				"type": "DATE"
+			},
+			{
+				"name": "daily_hospital_occupancy",
+				"type": "INT32"
+			},
+			{
+				"name": "daily_icu_occupancy",
+				"type": "INT32"
+			},
+			{
+				"name": "country",
+				"type": "UTF8"
+			}
+		]
 	}
 }

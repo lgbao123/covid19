@@ -13,13 +13,6 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "ds_lookup_dim_date",
-						"type": "DatasetReference"
-					},
-					"name": "sourceDimDate"
-				},
-				{
-					"dataset": {
 						"referenceName": "ds_lookup_dim_country",
 						"type": "DatasetReference"
 					},
@@ -37,25 +30,19 @@
 			],
 			"transformations": [
 				{
-					"name": "lookupCountry"
-				},
-				{
-					"name": "lookupDimDate"
-				},
-				{
 					"name": "selectColumn"
 				},
 				{
 					"name": "sortData"
 				},
 				{
-					"name": "derivedColumnDimDate"
+					"name": "CreateCountryCol"
 				},
 				{
-					"name": "derivedColumnCountry"
+					"name": "filterEurope"
 				},
 				{
-					"name": "filterOnlyEurope"
+					"name": "joinCountry"
 				}
 			],
 			"scriptLines": [
@@ -79,47 +66,18 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> sourceTesting",
 				"source(output(",
-				"          day_key as integer,",
-				"          date as date,",
-				"          day as short,",
-				"          month as short,",
-				"          year as short,",
-				"          day_name as string,",
-				"          month_name as string,",
-				"          day_of_year as short,",
-				"          week_of_year as short,",
-				"          week_of_month as short,",
-				"          week_begin_date as date,",
-				"          week_end_date as date",
-				"     ),",
-				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> sourceDimDate",
-				"source(output(",
 				"          countriesAndTerritories as string,",
 				"          location as string,",
 				"          continent as string,",
-				"          population_year as short,",
-				"          population as integer",
+				"          population_year as string,",
+				"          population as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> sourceDimCountry",
-				"derivedColumnCountry, sourceDimCountry lookup(country == location,",
-				"     multiple: false,",
-				"     pickup: 'any',",
-				"     broadcast: 'auto')~> lookupCountry",
-				"filterOnlyEurope, derivedColumnDimDate lookup(sourceTesting@Date == sourceDimDate@date,",
-				"     multiple: false,",
-				"     pickup: 'any',",
-				"     broadcast: 'auto')~> lookupDimDate",
-				"lookupDimDate select(mapColumn(",
+				"joinCountry select(mapColumn(",
+				"          date = Date,",
 				"          country,",
-				"          continent,",
-				"          population,",
-				"          date = sourceTesting@Date,",
-				"          year_week,",
-				"          year_month,",
 				"          total = {Cumulative total},",
 				"          daily_total = {Daily change in cumulative total},",
 				"          positive_rate = {Short-term positive rate},",
@@ -129,12 +87,16 @@
 				"     skipDuplicateMapOutputs: true) ~> selectColumn",
 				"selectColumn sort(asc(date, true),",
 				"     asc(country, true)) ~> sortData",
-				"sourceDimDate derive(year_week = concat(toString(year),'-W',lpad( toString(week_of_year) , 2, '0')),",
-				"          year_month = concat(toString(year),'-M',lpad( toString(month) , 2, '0'))) ~> derivedColumnDimDate",
-				"sourceTesting derive(country = trim(split(Entity,\"-\")[1])) ~> derivedColumnCountry",
-				"lookupCountry filter(continent=='Europe') ~> filterOnlyEurope",
+				"sourceTesting derive(country = trim(split(Entity,\"-\")[1])) ~> CreateCountryCol",
+				"sourceDimCountry filter(continent=='Europe') ~> filterEurope",
+				"CreateCountryCol, filterEurope join(country == location,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> joinCountry",
 				"sortData sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     format: 'parquet',",
 				"     truncate: true,",
 				"     umask: 0022,",
 				"     preCommands: [],",

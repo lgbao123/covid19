@@ -1,0 +1,76 @@
+{
+	"name": "df_transfrom_dim_date",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_lookup_dim_date",
+						"type": "DatasetReference"
+					},
+					"name": "sourceDImDate"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_sql_dimdate",
+						"type": "DatasetReference"
+					},
+					"name": "sinkToSql"
+				}
+			],
+			"transformations": [
+				{
+					"name": "selectCol"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          day_key as string,",
+				"          date as date,",
+				"          day as short,",
+				"          month as short,",
+				"          year as short,",
+				"          day_name as string,",
+				"          month_name as string,",
+				"          day_of_year as short,",
+				"          week_of_year as short,",
+				"          week_of_month as short,",
+				"          week_begin_date as date,",
+				"          week_end_date as date",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> sourceDImDate",
+				"sourceDImDate select(mapColumn(",
+				"          date_key = day_key,",
+				"          date,",
+				"          day,",
+				"          month,",
+				"          year,",
+				"          day_name,",
+				"          month_name,",
+				"          day_of_year,",
+				"          week_of_year,",
+				"          week_of_month,",
+				"          week_begin_date,",
+				"          week_end_date",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectCol",
+				"selectCol sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sinkToSql"
+			]
+		}
+	}
+}

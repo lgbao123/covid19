@@ -24,19 +24,19 @@
 		},
 		"schema": [
 			{
-				"name": "country",
+				"name": "countriesAndTerritories",
 				"type": "String"
 			},
 			{
-				"name": "country_code_2_digit",
-				"type": "String"
-			},
-			{
-				"name": "country_code_3_digit",
+				"name": "location",
 				"type": "String"
 			},
 			{
 				"name": "continent",
+				"type": "String"
+			},
+			{
+				"name": "population_year",
 				"type": "String"
 			},
 			{
